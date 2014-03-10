@@ -29,7 +29,8 @@
 		}
 	};
 	var removeNoise = function (s) {
-		// Removes: Multiple spaces, space at the begining/end of sentence, period at the end of the sentence.
+		// Removes: "&nbsp;", multiple spaces, space at the begining/end of sentence, period at the end of the sentence.
+		s = s.replace("&nbsp;"," ");
 		s = s.replace(/\s{2,}/," ");
 		s = s.replace(/^\s{1,}/,"");
 		s = s.replace(/\s{1,}$/,"");
