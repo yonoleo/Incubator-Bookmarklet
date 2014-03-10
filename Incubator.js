@@ -62,16 +62,15 @@
 				if (option_blocks.length === 0) {
 					// If sentence does not have options
 					sentence = removeNoise(sentence);
-					accepted.push(sentence.toLowerCase());
+					accepted.push(foldChars(sentence.toLowerCase()));
 				} else {
 					// If sentence has options
 					options_per_block = [];
 					options = 0;
 					options_per_block_text = [];
 					var options_per_block_done = [];
-					jl = option_blocks.length;
 					// Get the options for each of the blocks into array
-					for (j = 0; j < jl; j++) {
+					for (j = 0, jl = option_blocks.length; j < jl; j++) {
 						options = option_blocks[j].split('/').length;
 						var block = option_blocks[j].substr(1,(option_blocks[j].length-2));
 						options_per_block_text.push(block.split('/'));
@@ -81,7 +80,7 @@
 					// Setup variables for while loop
 					var options_per_block_total = options_per_block[0];
 					var options_done_total = 0;
-					for (j = 1; j < jl; j++) {
+					for (j = 1, jl = options_per_block.length; j < jl; j++) {
 						options_per_block_total = options_per_block_total * options_per_block[j];
 					}
 					var accepted_sentence = "";
@@ -90,13 +89,13 @@
 					while(!done) {
 						accepted_sentence = sentence;
 						// Replace each block with corresponding permutation
-						for (j = 0; j < jl; j++) {
+						for (j = 0, jl = options_per_block.length; j < jl; j++) {
 							accepted_sentence = accepted_sentence.replace(/\[[^\]]*\]/,options_per_block_text[j][options_per_block_done[j]]);
 						}
 						accepted_sentence = removeNoise(accepted_sentence);
 						accepted.push(foldChars(accepted_sentence.toLowerCase()));
 						// Adjust array with next permutation to pull.
-						for (j = 0; j < jl; j++) {
+						for (j = 0, jl = options_per_block.length; j < jl; j++) {
 							if (options_per_block_done[j] < (options_per_block[j] - 1)) {
 								options_per_block_done[j]++;
 								break;
