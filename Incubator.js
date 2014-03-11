@@ -15,14 +15,14 @@
 		var s = "";
 		// Reset styles
 		for	(i = 0, il = suggested.length; i < il; ++i) {
-			suggested[i].style.color = "black";
-			suggested[i].style.fontWeight = "400";
+			suggested[i].style.color = "#444";
+			suggested[i].style.fontWeight = "300";
 		}
 		for	(i = 0, il = suggested.length; i < il; ++i) {
 			s = foldChars(suggested[i].innerHTML.toLowerCase());
 			for	(var j = 0, jl = accepted.length; j < jl; ++j) {
 				if ( s === accepted[j] ) {
-					suggested[i].style.color = "green";
+					suggested[i].style.color = "#91c22c";
 					suggested[i].style.fontWeight = "700";
 				}
 			}
@@ -31,6 +31,7 @@
 	var removeNoise = function (s) {
 		// Removes: "&nbsp;", multiple spaces, space at the begining/end of sentence, period at the end of the sentence.
 		s = s.replace("&nbsp;"," ");
+		s = s.replace(/\s{2,}/," ");
 		s = s.replace(/\s{2,}/," ");
 		s = s.replace(/^\s{1,}/,"");
 		s = s.replace(/\s{1,}$/,"");
@@ -51,10 +52,14 @@
 	for (g = 0, gl = groups.length; g < gl; ++g) {
 		accepted = [];
 		suggested_raw = [];
-		accepted_raw = document.getElementById(groups[g]).getElementsByClassName('accepted-translation');
+		accepted_raw = document.getElementById(groups[g]).getElementsByClassName('translation-input');
 		suggested_raw = document.getElementById(groups[g]).getElementsByClassName('report-suggestion');
 		for (i = 0, il = accepted_raw.length; i < il; ++i) {
-			sentence_raw = accepted_raw[i].innerHTML;
+			if ( g === 0 ) {
+				sentence_raw = accepted_raw[i].value;
+			} else {
+				sentence_raw = accepted_raw[i].innerHTML;
+			}
 			if (sentence_raw.length > 0) {
 				sentence = sentence_raw.replace(/<span class="syntax">/gi,"");
 				sentence = sentence.replace(/<\/span>/gi,"");

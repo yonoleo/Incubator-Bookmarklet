@@ -4,10 +4,7 @@
 This bookmarklet takes the accepted translations as they are on the page (not as they are on the system) and highlights the suggested translations that should be accepted according to them.
 
 ## Installation
-1. Copy contents of Incubator-min.js 
-2. Create a bookmark
-3. Type 'javascript:' and paste contents of file.
-4. Save bookmark
+Create a bookmark with the contents of Incubator-min.js
 
 ## Limitations
 - Made to work with English <–> Spanish characters by "folding" accents and special characters.
