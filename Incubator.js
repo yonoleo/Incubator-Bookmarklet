@@ -1,6 +1,6 @@
 (function () {
 	// These are the characters that are being folded.
-	var charMap = { 'á':'a', 'é':'e', 'í':'i','ó':'o','ú':'u', 'ü':'u', 'ñ':'n' };
+	var charMap = { 'á':'a', 'é':'e', 'í':'i','ó':'o','ú':'u', 'ü':'u', 'ñ':'n', '¿':' ', '?':' ', ',':' ', '.':' ', ':':' ', ';':' ', '-':' ' };
 	var foldChars = function (s) {
 		var i = 0;
 		if (!s) { return ''; }
@@ -30,9 +30,8 @@
 	};
 	var removeNoise = function (s) {
 		// Removes: "&nbsp;", multiple spaces, space at the begining/end of sentence, period at the end of the sentence.
-		s = s.replace("&nbsp;"," ");
-		s = s.replace(/\s{2,}/," ");
-		s = s.replace(/\s{2,}/," ");
+		s = s.replace(/\t{1,}/g," ");
+		s = s.replace(/\s{2,}/g," ");
 		s = s.replace(/^\s{1,}/,"");
 		s = s.replace(/\s{1,}$/,"");
 		s = s.replace(/\.$/,"");
@@ -66,8 +65,10 @@
 				option_blocks = ( sentence.match(/\[[^\]]*\]/g) || [] );
 				if (option_blocks.length === 0) {
 					// If sentence does not have options
+					sentence = sentence.replace(/&nbsp;/g," ");
+					sentence = foldChars(sentence);
 					sentence = removeNoise(sentence);
-					accepted.push(foldChars(sentence.toLowerCase()));
+					accepted.push(sentence.toLowerCase());
 				} else {
 					// If sentence has options
 					options_per_block = [];
@@ -97,8 +98,10 @@
 						for (j = 0, jl = options_per_block.length; j < jl; j++) {
 							accepted_sentence = accepted_sentence.replace(/\[[^\]]*\]/,options_per_block_text[j][options_per_block_done[j]]);
 						}
+						accepted_sentence = accepted_sentence.replace(/&nbsp;/g," ");
+						accepted_sentence = foldChars(accepted_sentence);
 						accepted_sentence = removeNoise(accepted_sentence);
-						accepted.push(foldChars(accepted_sentence.toLowerCase()));
+						accepted.push(accepted_sentence.toLowerCase());
 						// Adjust array with next permutation to pull.
 						for (j = 0, jl = options_per_block.length; j < jl; j++) {
 							if (options_per_block_done[j] < (options_per_block[j] - 1)) {
