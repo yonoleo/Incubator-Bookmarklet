@@ -19,7 +19,10 @@
 			suggested[i].style.fontWeight = "300";
 		}
 		for	(i = 0, il = suggested.length; i < il; ++i) {
-			s = foldChars(suggested[i].innerHTML.toLowerCase());
+			s = suggested[i].innerHTML.replace(/&nbsp;/g," ");
+			s = foldChars(s);
+			s = removeNoise(s);
+			s = s.toLowerCase();
 			for	(var j = 0, jl = accepted.length; j < jl; ++j) {
 				if ( s === accepted[j] ) {
 					suggested[i].style.color = "#91c22c";
